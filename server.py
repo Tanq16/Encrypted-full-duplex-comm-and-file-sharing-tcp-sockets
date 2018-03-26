@@ -1,12 +1,14 @@
 import threading
 import socket
 import time
+import sys
 
 ss = socket.socket()
+ss.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 ss.bind(("localhost", 12345))
 ss.listen(10)
 
-sock, addr = ss.accept()  # NOTE: Comment for multithreaded
+sock, addr = ss.accept()
 
 class writeproc(threading.Thread):
     def __init__(self, client):
@@ -34,38 +36,14 @@ class readproc(threading.Thread):
                 print(response)
             if response == "BYE!":
                 final.set()
-                self.client.send((str("%020d"%len("CONNECTION RESET")) + "CONNECTION RESET").encode('utf_8'))
-                print("client now offline -- press enter to exit")
                 break
-
-# class serverproc(threading.Thread):
-#     final = threading.Event()
-#
-#     def __init__(self, server):
-#         threading.Thread.__init__(self)
-#         self.server = server
-#
-#     def run(self):
-#         while True:
-#             sock, add = self.server.accept()
-#             ssread = readproc(sock)
-#             sswrite = writeproc(sock)
-#             sswrite.start()
-#             ssread.start()
-#             sswrite.join()
-#             ssread.join()
-#             sock.close()
-#             ss.close()
 
 final = threading.Event()
 ssread = readproc(sock)
 sswrite = writeproc(sock)
+sswrite.setDaemon(True)
 sswrite.start()
 ssread.start()
-sswrite.join()
 ssread.join()
 sock.close()
 ss.close()
-# serverhandler = serverproc(ss)
-# serverhandler.start()
-# serverhandler.join()
