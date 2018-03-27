@@ -19,5 +19,5 @@ print("---------------", recieved)
 
 ---
 
-###### Note
+##### Note
 The above was tested and written in Python 3.5.2. Should also work with most other versions, however socket implementation is different on 2.7 and few others (specifically byte type behaviour as well as RSA module and Salsa20 module behaviour, so may or may not work as intended, you are free to test it out). Recommended Python3.
