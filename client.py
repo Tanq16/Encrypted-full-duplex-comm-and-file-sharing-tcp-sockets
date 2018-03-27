@@ -6,9 +6,22 @@ from Crypto.Cipher import Salsa20
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 from os import urandom
+import sys
+
+if len(sys.argv) == 1:
+    ip = input("enter server address : ")
+    port = int(input("enter port : "))
+elif len(sys.argv) == 3:
+    ip = sys.argv[1]
+    port = int(sys.argv[2])
+else:
+    print("Usage :: python3 client.py <ip_addr> <port_no>")
+    sys.exit()
+
+print("-"*80)
 
 s = socket.socket()
-s.connect(("localhost", 12345))
+s.connect((ip, port))
 
 class writeproc(threading.Thread):
     def __init__(self, server):
@@ -32,7 +45,7 @@ class writeproc(threading.Thread):
             if message == "BYE!":
                 final.set()
                 break
-            print("---------------", recieved)
+            # print("---------------", recieved)
 
 class readproc(threading.Thread):
     def __init__(self, server):
@@ -55,7 +68,7 @@ class readproc(threading.Thread):
             recieved += 1
             lock.release()
             print(response)
-            print("---------------", recieved)
+            # print("---------------", recieved)
 
 rsa = RSA.generate(1024)
 pubkey = rsa.publickey()
@@ -69,7 +82,8 @@ time.sleep(0.5)
 salsanonce = skeydec.decrypt(s.recv(2048))
 
 recieved = 0
-print("convo starts -------------------------------------------")
+print("CONNECTED TO %s"%ip)
+print("Type 'BYE!' to end connection\n" + "-"*80)
 
 final = threading.Event()
 lock = threading.Lock()
