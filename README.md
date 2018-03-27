@@ -11,8 +11,8 @@ Only client can exit the connection (stereotypical for the server to reply to ea
 ## Run the code
 
 1. To run on localhost i.e., listen and connect on local machine, simply clone and run the two python files on separate terminals.
-2. To run between two separate systems, change "localhost" to the appropriate IP address and deploy on the machines (run on terminal).
-3. The **--------\<number\>** is a part of the nonce being printed which can be omitted by commenting line 
+2. To run between two separate systems, give the appropriate IP address and port as arguments and deploy on the machines (run on terminal).
+3. The **--------\<number\>** is a part of the nonce being printed which is commented out. 
 ```python
 print("---------------", recieved)
 ```
@@ -20,4 +20,4 @@ print("---------------", recieved)
 ---
 
 ###### Note
-The above was tested and written in Python 3.5.2. Should also work with most other versions, however socket implementation is different on 2.7 and few others (specifically byte type behaviour, sp may or may not work as intended, you are free to test it out). Recommended Python3.
+The above was tested and written in Python 3.5.2. Should also work with most other versions, however socket implementation is different on 2.7 and few others (specifically byte type behaviour as well as RSA module and Salsa20 module behaviour, so may or may not work as intended, you are free to test it out). Recommended Python3.
