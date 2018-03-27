@@ -8,10 +8,20 @@ from Crypto.PublicKey import RSA
 from os import urandom
 import sys
 
+if len(sys.argv) == 1:
+    port = int(input("enter port to listen on : "))
+elif len(sys.argv) == 2:
+    port = int(sys.argv[1])
+else:
+    print("usage :: python3 server.py <port_no>")
+    sys.exit()
+
 ss = socket.socket()
 ss.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-ss.bind(("localhost", 12345))
+ss.bind(("localhost", port))
 ss.listen(10)
+
+print("-"*80)
 
 sock, addr = ss.accept()
 
@@ -36,7 +46,7 @@ class writeproc(threading.Thread):
             lock.acquire()
             recieved += 1
             lock.release()
-            print("---------------", recieved)
+            # print("---------------", recieved)
 
 class readproc(threading.Thread):
     def __init__(self, client):
@@ -61,7 +71,7 @@ class readproc(threading.Thread):
             if response == "BYE!":
                 final.set()
                 break
-            print("---------------", recieved)
+            # print("---------------", recieved)
 
 clientpubkey = RSA.import_key(sock.recv(2048))
 
@@ -74,7 +84,8 @@ time.sleep(1)
 sock.send(skeyenc.encrypt(salsanonce))
 
 recieved = 0
-print("convo starts -------------------------------------------")
+print("%s connected ."%addr[0])
+print("-"*80)
 
 final = threading.Event()
 lock = threading.Lock()
