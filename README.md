@@ -4,9 +4,9 @@
 
 This is an implementation of client server architecture that uses sockets for communication. It tries to replicate the working of `netcat` to some extent. Full duplex communication allows for simultaneous read and write (exchange of messages) for both the client as well as server. The addition is the encryption mechanism. RSA key exchange is used for exchanging key and 1 byte of nonce for Salsa20 stream cipher.
 
-No bound on length of messages (technically, the bound is the length for which the value can fit in 20 digits). The length is automatically prepended to the message. The receiver therefore reads the message length and then reads that many bytes to receive the message. The bound on number of messages is however about the number which can fit in 7 digits (in decimal).
+No bound on length of messages (technically, the bound is the length for which the value can fit in 20 digits, in decimal). The length is automatically prepended to the message. The receiver therefore reads the message length and then reads that many bytes to receive the message. The bound on number of messages is however about the number which can fit in 7 digits (in decimal).
 
-Only client can exit the connection (stereotypical for the server to reply to each request by until it disconnects) by sending a message "BYE!". 
+Only client can exit the connection (stereotypical for the server to reply to each requestby the client until it disconnects) by sending a message "BYE!". 
 
 ## Run the code
 
