@@ -2,7 +2,7 @@
 
 ---
 
-This is an implementation of a communications suite that uses python sockets. It aims at replicating some features of `netcat`. Full duplex communication allows for simultaneous read and write (exchange of messages) for both the client as well as server, just as in netcat. The addition is the encryption mechanism. RSA key exchange is used for exchanging key and Salsa20 stream cipher for encryption of the messages. The same can also transfer file contents securely using a particular command line argument. 
+This is an implementation of a communications suite that uses python sockets. It aims at replicating some features of `netcat`. Full duplex communication allows for simultaneous read and write (exchange of messages) for both the client as well as server, just as in netcat. The addition is the encryption mechanism. `RSA key exchange` is used for exchanging key and `Salsa20 stream cipher` for encryption of the messages. The same can also transfer file contents securely using a particular command line argument. 
 
 For message exchange, the length of a message is automatically prepended to the message. The receiver side therefore reads the message length and then reads that many bytes to receive the message. The bound on number of messages is for a session is equal to the number which can fit in 7 digits (in decimal as the nonce is set to increment for every message and is of 8 bytes). The maximum length of messages can be of size that fits in 20 decimal digits but this is only according to the code. The practical size that can be sent is equal to the 20 decimal digits but the receiving side only receives a particular amount which is set by the kernel of the receiving side operating system as the max socket buffer.
 
