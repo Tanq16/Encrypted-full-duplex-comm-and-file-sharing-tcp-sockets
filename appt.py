@@ -46,6 +46,7 @@ else:
     print("Usage for server: python3 appt.py -l <port>\nUsage for client: python3 appt.py <ip> <port>")
     print("\nFile transfer usage:")
     print("Usage for server: python3 appt.py -l <port> [-fr|-fs] <filename>\nUsage for client: python3 appt.py <ip> <port> [-fr|-fs] <filename>")
+    print("-fr : receive file\n-fs : send file")
     sys.exit()
 
 print("-"*80)
